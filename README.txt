@@ -12,8 +12,8 @@ INSTALLATION
 ------------
 
 cd /usr/sbin
-wget http://github.com/DmitryKoterov/dklab_vzset/raw/master/vzset
-chmod +x vzmem
+wget https://github.com/DmitryKoterov/dklab_vzset/raw/master/vzset
+chmod +x vzset
 
 
 SYNOPSIS
