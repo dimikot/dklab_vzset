@@ -1,0 +1,37 @@
+#!/usr/bin/perl -w
+
+my $VERSION = "1.01, 2010-11-12";
+
+my $ctid = $ARGV[0] or usage();
+my $opt = $ARGV[1] or usage();
+$ctid =~ /^\d+$/s or usage();
+$opt =~ /^\w+$/s or usage();
+
+my $cmd = "vzlist -H -o $opt.b,$opt.l $ctid";
+my $cur = `$cmd`;
+my ($barrier, $limit) = $cur =~ /^\s*(\d+)\s+(\d+)/s or die "Command '$cmd' output cannot be parsed\n";
+
+print "Current $opt = $barrier:$limit\n";
+print "Enter new value (format is BARRIER:LIMIT or just LIMIT): ";
+my $bl = scalar <STDIN>;
+
+$bl =~ /^\s*(\d+)(?::(\d+))?\s*$/s or die "Invalid input format.\n";
+$barrier = $1;
+$limit = $2 || $1;
+
+print "Accepted new value $barrier:$limit. Apply (y/n)? ";
+my $yn = scalar <STDIN>;
+if ($yn =~ /y/i) {
+    my $cmd = "vzctl set $ctid --$opt $barrier:$limit --save";
+    print $cmd . "\n";
+    system($cmd);
+}
+
+
+sub usage {
+	die 
+		"dkLab vzset: set barier/limit for OpenVZ UBC option interactively.\n" .
+		"Homepage: http://en.dklab.ru/lib/dklab_vzset/\n" .
+		"Usage:\n" .
+		"    $0 CTID option-name \n";
+}
