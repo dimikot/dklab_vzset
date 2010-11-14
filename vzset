@@ -1,17 +1,17 @@
 #!/usr/bin/perl -w
 
-my $VERSION = "1.01, 2010-11-12";
+my $VERSION = "1.02, 2010-11-14";
 
 my $ctid = $ARGV[0] or usage();
 my $opt = $ARGV[1] or usage();
 $ctid =~ /^\d+$/s or usage();
 $opt =~ /^\w+$/s or usage();
 
-my $cmd = "vzlist -H -o $opt.b,$opt.l $ctid";
+my $cmd = "vzlist -H -o $opt.b,$opt.l,hostname $ctid";
 my $cur = `$cmd`;
-my ($barrier, $limit) = $cur =~ /^\s*(\d+)\s+(\d+)/s or die "Command '$cmd' output cannot be parsed\n";
+my ($barrier, $limit, $host) = $cur =~ /^\s*(\d+)\s+(\d+)\s+(\S+)/s or die "Command '$cmd' output cannot be parsed\n";
 
-print "Current $opt = $barrier:$limit\n";
+print "$host: $opt = $barrier:$limit\n";
 print "Enter new value (format is BARRIER:LIMIT or just LIMIT): ";
 my $bl = scalar <STDIN>;
 

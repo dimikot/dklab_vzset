@@ -23,7 +23,7 @@ Bellow is a log of typical vzset session (an administrator typed
 a new value "4703360" and pressed "y" to confirm).
 
 # vzset 10002 tcpsndbuf
-Current tcpsndbuf = 1720320:2703360
+example.com: tcpsndbuf = 1720320:2703360
 Enter new value (format is BARRIER:LIMIT or just LIMIT): 4703360
 Accepted new value 4703360:4703360. Apply (y/n)? y
 vzctl set 10002 --tcpsndbuf 4703360:4703360 --save
