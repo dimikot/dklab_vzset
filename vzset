@@ -3,7 +3,7 @@
 my $VERSION = "1.02, 2010-11-14";
 
 my $ctid = $ARGV[0] or usage();
-my $opt = $ARGV[1] or usage();
+my $opt = lc($ARGV[1]) or usage();
 $ctid =~ /^\d+$/s or usage();
 $opt =~ /^\w+$/s or usage();
 
